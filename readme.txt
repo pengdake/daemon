@@ -2,7 +2,7 @@
 centos 7
 
 现有服务：
-memory_monitor:监控某个进程的内存使用量
+memory_monitor:监控某个进程的内存使用量,如果使用量超过6%（可通过配置文件设置）则强制终结
 test:测试
 
 执行方法：
