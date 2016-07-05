@@ -1,9 +1,10 @@
 import logging
+import utils
 
-
+CONF = utils.get_default()
 class MonitorLog(object):
     def __init__(self):
-        self.log_path = "/var/log/eayunstack_monitor.log"
+        self.log_path = CONF['monitorlog']
         self.log_level = logging.DEBUG
         self.logger = logging.getLogger('MonitorLog')
         self.logger.setLevel(self.log_level)
