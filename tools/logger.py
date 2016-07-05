@@ -12,13 +12,11 @@ class MonitorLog(object):
         fh = logging.FileHandler(self.log_path)
         fh.setLevel(self.log_level)
         fh.setFormatter(self.fmt)
-        print "file_log"
         self.logger.addHandler(fh)
         return fh.stream,self.logger
     def stream_log(self):
         ch = logging.StreamHandler()
         ch.setLevel(self.log_level)
-        print "stream_log"
         ch.setFormatter(self.fmt)
         self.logger.addHandler(ch)
         return self.logger

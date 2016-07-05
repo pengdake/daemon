@@ -11,7 +11,7 @@ CONF = utils.get_conf()
 class MyDaemon(object):
     def __init__(self,service):
         self.stdin_path = '/dev/null'
-	self.stdout_path = '/dev/tty'
+	self.stdout_path = '/dev/null'
 	self.stderr_path = '/dev/null'
 	self.pidfile_path = '/tmp/%s.pid' % service
 	self.pidfile_timeout = 5
