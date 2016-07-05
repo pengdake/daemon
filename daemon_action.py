@@ -2,18 +2,19 @@
 from daemon import runner
 import commands
 import time
-#from tools.logger import FILE_LOG as LOG
-import log
+from tools.logger import FILE_LOG as LOG 
+from tools.logger import STREAM
 import utils
+import sys
 
 CONF = utils.get_conf()
 class MyDaemon(object):
     def __init__(self,service):
         self.stdin_path = '/dev/null'
-	self.stdout_path = '/dev/null'
+	self.stdout_path = '/dev/tty'
 	self.stderr_path = '/dev/null'
 	self.pidfile_path = '/tmp/%s.pid' % service
-	self.pidfile_timeout = 30
+	self.pidfile_timeout = 5
         self.service = service
     def run(self):
         eval('Services.'+self.service+'()')
@@ -38,29 +39,27 @@ class Services(object):
 	            if status:
 	                failed_info = 'the memory of %s usage more than 80 percent \
 	                               and it cannot be killed:%s ' %(name,info)
-                        #LOG.error(failed_info)
+                        LOG.error(failed_info)
                         if not latest_log or cmp(latest_log,failed_info): 
-                            log.write(failed_info,'error','memory_monitor')
+                            LOG.error(failed_info)
                             latest_log = failed_info
                     else:
                         successed_info = "%s is killed successful!" %name
                         if not latest_log or cmp(latest_log,failed_info):
-                            log.write(successed_info,'warn','memory_monitor')
+                            LOG.warn(successed_info)
                             latest_log = successed_info 
-                        #LOG.warn(successed_info)
             time.sleep(3)
     @staticmethod
     def test():
        while True:
            service_conf = CONF['test']
            info = service_conf['info']
-           #log_write(info,"info","test")
-           with open('/tmp/hello','w') as f:
-               f.write(info)
+           LOG.info('test')
 def action(service):
-    my_daemon = MyDaemon(service)
+    my_daemon = MyDaemon(service)    
     daemon_runner = runner.DaemonRunner(my_daemon)
+    daemon_runner.daemon_context.files_preserve = [STREAM]
     daemon_runner.do_action()
 
 if __name__ == '__main__':
-    action("test")
+    action(sys.argv[2])

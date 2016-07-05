@@ -14,7 +14,7 @@ class MonitorLog(object):
         fh.setFormatter(self.fmt)
         print "file_log"
         self.logger.addHandler(fh)
-        return self.logger
+        return fh.stream,self.logger
     def stream_log(self):
         ch = logging.StreamHandler()
         ch.setLevel(self.log_level)
@@ -24,7 +24,7 @@ class MonitorLog(object):
         return self.logger
    
 monitor_obj = MonitorLog()
-FILE_LOG = monitor_obj.file_log()
+STREAM,FILE_LOG = monitor_obj.file_log()
 #STREAM_LOG = monitor_obj.stream_log()
 
 if __name__ == '__main__':
