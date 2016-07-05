@@ -1,3 +1,6 @@
+default:
+  monitor_log: '/var/log/eayunstack_monitor.log'
+
 services_list: ['memory_monitor','test']
 
 memory_monitor:
