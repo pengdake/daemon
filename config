@@ -1,0 +1,9 @@
+services_list: ['memory_monitor','test']
+
+memory_monitor:
+  log_path: '/tmp/memory_log'
+  limit_memory: '6'
+
+test:
+  info: 'Hello world'
+
