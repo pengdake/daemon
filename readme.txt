@@ -1,6 +1,10 @@
 测试环境：
 centos 7
 
+现有服务：
+memory_monitor:监控某个进程的内存使用量
+test:测试
+
 执行方法：
 启动所有eayunstack相关的服务
 python control.py start
