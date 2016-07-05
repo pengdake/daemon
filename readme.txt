@@ -2,11 +2,11 @@
 centos 7
 
 执行方法：
-启动所有eayunstack相关的守护进程
+启动所有eayunstack相关的服务
 python control.py start
-关闭所有eayunstack相关的守护进程
+关闭所有eayunstack相关的服务
 python control.py stop
-重启所有eayunstack相关的守护进程
+重启所有eayunstack相关的服务
 python control.py restart
 
 memory_monitor要求

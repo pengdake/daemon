@@ -7,7 +7,7 @@ from tools.logger import STREAM
 import utils
 import sys
 
-CONF = utils.get_conf()
+SERVICE = utils.get_conf()
 class MyDaemon(object):
     def __init__(self,service):
         self.stdin_path = '/dev/null'
@@ -22,7 +22,7 @@ class MyDaemon(object):
 class Services(object):
     @staticmethod
     def memory_monitor():
-        service_conf = CONF['memory_monitor']
+        service_conf = SERVICE['memory_monitor']
         log_path = service_conf['log_path']
         limit_memory = service_conf['limit_memory']
         latest_log = ''
@@ -52,9 +52,11 @@ class Services(object):
     @staticmethod
     def test():
        while True:
-           service_conf = CONF['test']
+           service_conf = SERVICE['test']
            info = service_conf['info']
-           LOG.info('test')
+           log_path = service_conf['log_path']
+           with open(log_path,'w') as f:
+               f.write(info)
 def action(service):
     my_daemon = MyDaemon(service)    
     daemon_runner = runner.DaemonRunner(my_daemon)

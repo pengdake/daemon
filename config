@@ -8,5 +8,6 @@ memory_monitor:
   limit_memory: '6'
 
 test:
+  log_path: '/tmp/test'
   info: 'Hello world'
 
