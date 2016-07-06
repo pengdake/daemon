@@ -30,21 +30,29 @@ class Services(object):
             (status,info) = commands.getstatusoutput('top -b -n 1 > %s' %log_path)
             if not status:
                 with open(log_path) as f:
-                    result = f.readlines()[5].strip().split(' ')
-	        max_memory = result[-5]
+                    lines = f.readlines()
+                length = len(lines)
+                for key in range(length):
+                    if lines[key] == '\n':
+                        key += 2
+                        line = lines[key].strip()
+                        value = ' '.join(filter(lambda x: x,line.split(' ')))
+                        result = value.split(' ')
+                        break
+	        max_memory = result[-3]
                 if max_memory > limit_memory:
                     pid = result[0]
                     name = result[-1].strip()
 	            (status,info) = commands.getstatusoutput('kill -s 9 %s' %pid)
 	            if status:
-	                failed_info = 'the memory of %s usage more than 80 percent \
-	                               and it cannot be killed:%s ' %(name,info)
+	                failed_info = 'the memory of %s usage more than %s percent \
+	                               and it cannot be killed:%s ' %(name,limit_memory,info)
                         LOG.error(failed_info)
                         if not latest_log or cmp(latest_log,failed_info): 
                             LOG.error(failed_info)
                             latest_log = failed_info
                     else:
-                        successed_info = "%s is killed successful!" %name
+                        successed_info = "%s use %s percent is killed successful!" % (name,max_memory)
                         if not latest_log or cmp(latest_log,failed_info):
                             LOG.warn(successed_info)
                             latest_log = successed_info 

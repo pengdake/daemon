@@ -24,7 +24,7 @@ class MonitorLog(object):
    
 monitor_obj = MonitorLog()
 STREAM,FILE_LOG = monitor_obj.file_log()
-#STREAM_LOG = monitor_obj.stream_log()
+STREAM_LOG = monitor_obj.stream_log()
 
 if __name__ == '__main__':
     STREAM_LOG.info("info")
